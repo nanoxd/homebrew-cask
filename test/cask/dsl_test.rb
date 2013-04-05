@@ -33,4 +33,16 @@ describe Cask::DSL do
       flunk("expected content_length to work, but got exception #{e}")
     end
   end
+
+  it "allows you to specify linkables" do
+    CaskWithLinkables = Class.new(Cask)
+    CaskWithLinkables.class_eval do
+      link :app, 'Foo.app'
+      link :app, 'Bar.app'
+    end
+
+    instance = CaskWithLinkables.new
+    instance.specifies_linkables?(:app).must_equal true
+    instance.linkables[:app].must_equal %w[Foo.app Bar.app]
+  end
 end

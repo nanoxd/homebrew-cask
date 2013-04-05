@@ -47,7 +47,7 @@ class TestHelper
     Cask::FakeFetcher.fake_response_for(*args)
   end
 
-  def self.is_alias?(candidate)
+  def self.valid_alias?(candidate)
     target = Cask::AppLinker.osascript(%Q(
       tell application "Finder"
         set theItem to (POSIX file "#{candidate}") as alias

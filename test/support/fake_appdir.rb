@@ -1,4 +1,4 @@
-# wire in a fake appdir per-test 
+# wire in a fake appdir per-test
 module FakeAppdirHooks
   def before_setup
     super
