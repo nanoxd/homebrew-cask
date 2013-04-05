@@ -10,7 +10,6 @@ rubyfiles.each do |file|
 end
 
 class Cask
-  include Cask::Actions
   include Cask::DSL
   include Cask::Scopes
 

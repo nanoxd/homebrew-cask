@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Cask::Actions do
+describe Cask::AppLinker do
   describe 'linkapps' do
     before do 
       @caffeine = Cask.load('local-caffeine')
@@ -13,14 +13,8 @@ describe Cask::Actions do
     end
 
     it "works with an application in the root directory" do
-      shutup do
-        @caffeine.linkapps
-      end
-
+      Cask::AppLinker.new(@caffeine).link
       expected_symlink = Cask.appdir/'Caffeine.app'
-      expected_symlink.must_be :exist?
-      expected_symlink.must_be :symlink?
-      expected_symlink.readlink.must_equal @app
     end
 
     it "works with an application in a subdir" do
@@ -29,14 +23,9 @@ describe Cask::Actions do
       FileUtils.mv @app, appsubdir
       appinsubdir = appsubdir/'Caffeine.app'
 
-      shutup do
-        @caffeine.linkapps
-      end
+      Cask::AppLinker.new(@caffeine).link
 
       expected_symlink = Cask.appdir/'Caffeine.app'
-      expected_symlink.must_be :exist?
-      expected_symlink.must_be :symlink?
-      expected_symlink.readlink.must_equal appinsubdir
     end
   end
 end
