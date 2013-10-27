@@ -5,4 +5,6 @@ group :test do
   gem 'minitest', '4.7.0'
   gem 'minitest-colorize'
   gem 'mocha', '0.14.0'
+  gem 'jazz_hands'
+  gem 'sourcify'
 end

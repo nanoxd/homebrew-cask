@@ -1,5 +1,7 @@
 require 'checksum'
 require 'set'
+require 'pry'
+require 'sourcify'
 
 module Cask::DSL
   def self.included(base)
@@ -18,6 +20,8 @@ module Cask::DSL
 
   def caveats; ''; end
 
+  def spec; self.class.spec; end
+
   module ClassMethods
     def homepage(homepage=nil)
       @homepage ||= homepage
@@ -33,6 +37,12 @@ module Cask::DSL
 
     def artifacts
       @artifacts ||= Hash.new { |hash, key| hash[key] = Set.new }
+    end
+
+    def spec(spec=nil, &block)
+      @spec ||= spec &block
+      self.instance_eval(&block)
+      # class_eval may be the best thing to use
     end
 
     ARTIFACT_TYPES = [

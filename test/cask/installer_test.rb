@@ -103,6 +103,19 @@ describe Cask::Installer do
       pkg = dest_path/'Naked.pkg'
       pkg.must_be :file?
     end
+
+    it "installs a cask with multiple versions" do
+      multiple_version = Cask.load('multiple-versions')
+
+      shutup do
+        Cask::Installer.new(multiple_version).install(spec: )
+      end
+
+      dest_path = Cask.caskroom/'multiple-versions'/multiple_version.version
+      dest_path.must_be :directory?
+      application = dest_path/'Caffeine.app'
+      application.must_be :directory?
+    end
   end
 
   describe "uninstall" do

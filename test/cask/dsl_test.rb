@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pry'
 
 describe Cask::DSL do
   it "lets you set url, homepage, and version" do
@@ -84,4 +85,17 @@ describe Cask::DSL do
     instance = CaskWithInstallables.new
     Array(instance.artifacts[:install]).sort.must_equal %w[Bar.pkg Foo.pkg]
   end
+
+  it "allows multiple versions to be specified" do
+    CaskWithMultipleVersions = Class.new(Cask)
+    CaskWithMultipleVersions.class_eval do
+      spec :alternate do
+        url 'http://example.com/example.dmg'
+        sha1 'exists'
+      end
+    end
+
+    instance = CaskWithMultipleVersions.new
+  end
+
 end
